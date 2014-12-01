@@ -3,7 +3,6 @@ package dungeon;
 public class Client {
 	
 	private AbstractFactory factory = null;
-	private AbstractMaze maze = null;
 	
 	public void setFactory(AbstractFactory factory) {
 		System.out.println("setFactory()");						//delete this later
