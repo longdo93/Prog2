@@ -9,6 +9,7 @@ public class TestStart {
 		Client c = new Client();
 		c.setFactory(new Factory());
 		c.makeRoom();
+		c.printRoom();
 	}
 
 }

@@ -7,7 +7,7 @@ public class Room {
 	public Room(String roomplan) {
 		System.out.println("setRoom()");			//delete this later
 		System.out.println("String.split(:)");		//delete this later
-		String[] split = roomplan.split(":");		//delete this later
+		String[] split = roomplan.split(":");
 		this.id = split[0];
 		this.n  = split[1];
 		this.e  = split[2];

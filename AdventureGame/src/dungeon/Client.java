@@ -3,6 +3,7 @@ package dungeon;
 public class Client {
 	
 	private AbstractFactory factory = null;
+	private AbstractMaze 	maze 	= null;
 	
 	public void setFactory(AbstractFactory factory) {
 		System.out.println("setFactory()");						//delete this later
@@ -12,8 +13,14 @@ public class Client {
 	public void makeRoom() {
 		if (this.factory != null) {
 			System.out.println("makeRoom()");					//delete this later
-			this.factory.generateMaze().makeRoom();
+			this.maze = this.factory.generateMaze();
+			this.maze.makeRoom();
 		}
+	}
+	
+	public void printRoom() {
+		
+		this.maze.printMaze();
 	}
 
 }
