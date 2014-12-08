@@ -18,11 +18,9 @@ public class MainFrame extends JFrame {
 		/**
 		 * Sizing and centering app frame.
 		 */
-		int x = 0, y = 0, width = 800, height = 600;
+		setSize(800, 600);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-		x = (int) ((d.getWidth() - width) / 2);
-		y = (int) ((d.getHeight() - height) / 2);
-		setBounds(x, y, width, height);
+		setLocation((d.width - getSize().width) / 2, (d.height - getSize().height) / 2);
 
 		createMenuBar();
 		buttonpanel.createButtons();
