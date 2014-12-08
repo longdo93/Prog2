@@ -8,6 +8,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 
 public class MainFrame extends JFrame {
+	
 	buttonPanel buttonpanel = new buttonPanel();
 
 	public MainFrame() {
