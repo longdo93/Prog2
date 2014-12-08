@@ -31,16 +31,16 @@ public class MainFrame extends JFrame {
 
 	private void createMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
-
 		JMenu menuFile = new JMenu("File");
 		JMenu menuFile2 = new JMenu("Figure");
 		JMenu menuFile3 = new JMenu("Help");
 		JMenu menuFile4 = new JMenu("Author");
+		
 		menuFile.add(MenuItemFactory.createMenuItem("Open...", 'o', "file_open"));
 		menuFile.add(MenuItemFactory.createMenuItem("Save...", 's', "file_save"));
 		menuFile.add(MenuItemFactory.createMenuItem("Quit...", 'q', "file_close"));
 		menuFile2.add(MenuItemFactory.createMenuItem("Open...", 'o', "figure_open"));
-
+		
 		menuBar.add(menuFile);
 		menuBar.add(menuFile2);
 		menuBar.add(menuFile3);
