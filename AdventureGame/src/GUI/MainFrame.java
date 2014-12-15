@@ -11,7 +11,7 @@ public class MainFrame extends JFrame {
 	
 
 
-	ButtonPanel buttonpanel = new ButtonPanel();
+
 
 
 	public MainFrame() {
@@ -27,9 +27,7 @@ public class MainFrame extends JFrame {
 
 		createMenuBar();
 		buttonpanel.createButtons();
-
 		buttonpanel.createButtonListeners();
-
 		getContentPane().add(buttonpanel.getbuttonPanel());
 	}
 
