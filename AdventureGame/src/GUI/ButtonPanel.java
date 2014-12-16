@@ -18,27 +18,27 @@ public class ButtonPanel {
 	private JPanel buttonPanel;
 	GameMaster gm=new GameMaster();
 	Player player=new Player();
-	private JButton b1 = new JButton("North");
-	private JButton b2 = new JButton("West");
-	 private JButton b3 = new JButton("East");
-	private JButton b4 = new JButton("South");
+	private JButton north = new JButton("North");
+	private JButton west = new JButton("West");
+	 private JButton east = new JButton("East");
+	private JButton south = new JButton("South");
 
 	public void createButtons() {
 
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(null);
-		buttonPanel.add(b1);
-		buttonPanel.add(b2);
-		buttonPanel.add(b3);
-		buttonPanel.add(b4);
-		b1.setBounds(85, 435, 60, 30);
-		b2.setBounds(35, 465, 60, 30);
-		b3.setBounds(135, 465, 60, 30);
-		b4.setBounds(85, 495, 60, 30);
+		buttonPanel.add(north);
+		buttonPanel.add(west);
+		buttonPanel.add(east);
+		buttonPanel.add(south);
+		north.setBounds(85, 435, 60, 30);
+		west.setBounds(35, 465, 60, 30);
+		east.setBounds(135, 465, 60, 30);
+		south.setBounds(85, 495, 60, 30);
 	}
 	
 	public void createButtonListeners(){
-		this.b1.addActionListener(new ActionListener() {
+		this.north.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 				player.setDirection("N");
@@ -46,7 +46,7 @@ public class ButtonPanel {
 				}
 		});
 		
-		this.b2.addActionListener(new ActionListener() {
+		this.west.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 				player.setDirection("W");
@@ -54,7 +54,7 @@ public class ButtonPanel {
 				}
 		});
 		
-		this.b3.addActionListener(new ActionListener() {
+		this.east.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 				player.setDirection("E");
@@ -62,7 +62,7 @@ public class ButtonPanel {
 				}
 		});
 		
-		this.b4.addActionListener(new ActionListener() {
+		this.south.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 				player.setDirection("S");
