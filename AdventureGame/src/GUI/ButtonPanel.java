@@ -1,3 +1,4 @@
+
 /**
 longdo
 */
@@ -75,6 +76,4 @@ public class ButtonPanel {
 	public JComponent getbuttonPanel() {
 		return buttonPanel;
 	}
-	
-
 }

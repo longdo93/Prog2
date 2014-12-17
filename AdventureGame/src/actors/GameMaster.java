@@ -11,7 +11,7 @@ import dungeon.Room;
  */
 public class GameMaster extends Observable {
 
-	public Player player;
+	Player player;
 	Vector<Room> labyrinth;
 
 	public GameMaster() {
@@ -85,6 +85,8 @@ public class GameMaster extends Observable {
 					break;
 			}
 			player.setPosition(enterRoom);
+			setChanged();
+			notifyObservers(enterRoom);				//notify observers, that player entered a room
 		}else
 			System.out.println("You can not move in this direction!");
 	}
