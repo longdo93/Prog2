@@ -2,6 +2,7 @@ package dungeon;
 
 import input.RoomReader;
 
+import java.util.Observable;
 import java.util.Vector;
 
 public class Factory extends AbstractFactory {
@@ -41,5 +42,4 @@ public class Factory extends AbstractFactory {
 	public int getRoomCount() {
 		return this.roomplans.size();
 	}
-
 }

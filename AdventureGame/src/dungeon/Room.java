@@ -1,5 +1,7 @@
 package dungeon;
 
+import java.util.Observable;
+
 public class Room extends AbstractRoom {
 
 	private String id, n, e, s, w;
@@ -44,6 +46,12 @@ public class Room extends AbstractRoom {
 	public String toString() {
 		return "Room [id=" + id + ", n=" + n + ", e=" + e + ", s=" + s + ", w="
 				+ w + "]";
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
