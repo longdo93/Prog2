@@ -18,6 +18,7 @@ public class Client {
 	
 	public void setGameMaster() {
 		if (this.gm == null) {
+			System.out.println("setGameMaster()");			//delete this later
 			this.gm = new GameMaster();
 		}
 	}

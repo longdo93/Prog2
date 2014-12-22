@@ -43,6 +43,8 @@ public class ButtonPanel {
 
 			public void actionPerformed(ActionEvent e) {
 				player.setDirection("N");
+				String direction=player.getDirection();
+				System.out.println(direction);
 				gm.movePlayer(player.getDirection());
 				}
 		});

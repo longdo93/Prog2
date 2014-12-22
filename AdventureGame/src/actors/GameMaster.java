@@ -70,7 +70,9 @@ public class GameMaster extends Observable {
 	 * If true setPosition to direction
 	 */
 	public void movePlayer(String direction) {
-		int i = Integer.parseInt(player.getPosition());	//get index of room where the player is located at
+		player.setPosition("5");
+		String playerPos = player.getPosition();
+		int i = Integer.parseInt(playerPos);	//get index of room where the player is located at
 		String enterRoom = "";
 		Room room = this.labyrinth.elementAt(i - 1);
 		if ( checkMove(direction, player.getPosition()) ) {
