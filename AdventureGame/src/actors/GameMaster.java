@@ -1,6 +1,7 @@
 package actors;
 
-import java.util.Observable;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Vector;
 
 import dungeon.Room;
@@ -9,14 +10,24 @@ import dungeon.Room;
  * This Class is the GameMaster.
  * The GameMaster observes the game and moves the Player, manages game rules etc.
  */
-public class GameMaster extends Observable {
+public class GameMaster implements ActionListener {
 
-	public Player player;
-	Vector<Room> labyrinth;
+	private static GameMaster instance;
 
-	public GameMaster() {
-
+	private GameMaster() {
 	}
+
+	public static GameMaster getInstance() {
+		if (instance == null) {
+			instance = new GameMaster();
+		}
+
+		return instance;
+	}
+
+	private Player player;
+	private Vector<Room> labyrinth;
+
 	/*
 	 * Initiate the game.
 	 */
@@ -25,7 +36,8 @@ public class GameMaster extends Observable {
 			this.labyrinth = labyrinth;
 		}
 		if (this.player == null) {
-			this.player = new Player();
+			this.player = Player.getInstance();
+			System.out.println("Player created"); // delete this later
 		}
 	}
 
@@ -33,30 +45,31 @@ public class GameMaster extends Observable {
 	 * Takes parameter direction and player position. Checks if the room has a
 	 * door at this direction. If yes, return true, if not, return false.
 	 */
-	public boolean checkMove(String direction, String playerPos) {
-		direction = player.getDirection();
-		playerPos = player.getPosition();
-		int i = Integer.parseInt(playerPos);			//get index of room where the player is located at
+	public boolean checkMove(String target, String playerPos) {
+		target = this.player.getDirection();
+		playerPos = this.player.getPosition();
+		int i = Integer.parseInt(playerPos); // get index of room where the
+												// player is located at
 		Room room = this.labyrinth.elementAt(i - 1);
-		
-		switch (direction) {
+
+		switch (target) {
 		case "N":
-			if (room.getN().contains("0")) {
+			if (room.getN().equals("0")) {
 				return false;
 			} else
 				return true;
 		case "E":
-			if (room.getE().contains("0")) {
+			if (room.getE().equals("0")) {
 				return false;
 			} else
 				return true;
 		case "S":
-			if (room.getS().contains("0")) {
+			if (room.getS().equals("0")) {
 				return false;
 			} else
 				return true;
 		case "W":
-			if (room.getW().contains("0")) {
+			if (room.getW().equals("0")) {
 				return false;
 			} else
 				return true;
@@ -65,28 +78,59 @@ public class GameMaster extends Observable {
 		}
 
 	}
+
 	/*
-	 * Checks if player can move to give direction.
-	 * If true setPosition to direction
+	 * Checks if player can move to give direction. If true setPosition to
+	 * direction
 	 */
 	public void movePlayer(String direction) {
-		int i = Integer.parseInt(this.player.getPosition());	//get index of room where the player is located at
+		this.player.setDirection(direction);
+		int i = Integer.parseInt(this.player.getPosition()); // get index of
+																// room where
+																// the player is
+																// located at
 		String enterRoom = "";
 		Room room = this.labyrinth.elementAt(i - 1);
-		if ( checkMove(direction, player.getPosition()) ) {
+		System.out.println("checking move..."); // delete this later
+		if (checkMove(direction, this.player.getPosition())) {
 			switch (direction) {
-				case "N":  enterRoom = room.getN();
-					break;
-				case "E":  enterRoom = room.getE();
-					break;
-				case "S":  enterRoom = room.getS();
-					break;
-				case "W":  enterRoom = room.getW();
-					break;
+			case "N":
+				enterRoom = room.getN();
+				break;
+			case "E":
+				enterRoom = room.getE();
+				break;
+			case "S":
+				enterRoom = room.getS();
+				break;
+			case "W":
+				enterRoom = room.getW();
+				break;
 			}
-			player.setPosition(enterRoom);
-		}else
+			this.player.setPosition(enterRoom);
+		} else
 			System.out.println("You can not move in this direction!");
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getActionCommand().equals("N")) {
+			System.out.println("North");
+			movePlayer("N");
+		} else if (e.getActionCommand().equals("W")) {
+			System.out.println("West");
+			movePlayer("W");
+		} else if (e.getActionCommand().equals("S")) {
+			System.out.println("South");
+			movePlayer("S");
+		} else if (e.getActionCommand().equals("E")) {
+			System.out.println("East");
+			movePlayer("E");
+		}
+		System.out.println("You are now in room: " + this.player.getPosition());
+		System.out.println(this.labyrinth.elementAt(Integer
+				.parseInt(this.player.getPosition()) - 1)); // delete this later
+
 	}
 
 }
