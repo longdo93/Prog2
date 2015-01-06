@@ -2,8 +2,10 @@ package dungeon;
 
 public abstract class AbstractFactory {
 	
-	/*
-	 * This method returns a room
+	/**
+	 *This method returns a room
+	 * @param i
+	 * @return room
 	 */
 	public abstract AbstractRoom makeRoom(int i);
 	

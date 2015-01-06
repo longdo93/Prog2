@@ -29,8 +29,9 @@ public class GameMaster implements ActionListener {
 	private Player player;
 	private Vector<Room> labyrinth;
 
-	/*
+	/**
 	 * Initiate the game.
+	 * @param labyrinth
 	 */
 	public void setGame(Vector<Room> labyrinth) {
 		if (this.labyrinth == null) {
@@ -39,12 +40,17 @@ public class GameMaster implements ActionListener {
 		if (this.player == null) {
 			this.player = Player.getInstance();
 			System.out.println("Player created"); // delete this later
+			System.out.println("You start in room: " + this.player.getPosition()); //delete later
+			System.out.println(getPlayerRoom().toString()); //delete later
 		}
 	}
 
-	/*
+	/**
 	 * Takes parameter direction and player position. Checks if the room has a
 	 * door at this direction. If yes, return true, if not, return false.
+	 * @param target
+	 * @param playerPos
+	 * @return true or false
 	 */
 	public boolean checkMove(String target, String playerPos) {
 		target = this.player.getDirection();
@@ -78,9 +84,10 @@ public class GameMaster implements ActionListener {
 
 	}
 
-	/*
+	/**
 	 * Checks if player can move to given direction. If true setPosition to room
 	 * lying in this direction.
+	 * @param direction
 	 */
 	public void movePlayer(String direction) {
 		this.player.setDirection(direction);
@@ -106,7 +113,11 @@ public class GameMaster implements ActionListener {
 		} else
 			System.out.println("You can not move in this direction!");
 	}
-
+	
+	/**
+	 * get the Players Room
+	 * @return room object
+	 */
 	private Room getPlayerRoom() {
 		Room room = null;
 		for (int i = 0; i < this.labyrinth.size(); i++) {
