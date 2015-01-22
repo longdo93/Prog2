@@ -18,9 +18,8 @@ public class Player implements Observer {
 
 		return instance;
 	}
-	
-	private Integer randomNum=1 + (int)(Math.random()*9);
-	private String position = randomNum.toString();
+
+	private String position = "1";
 	private String direction;
 
 	public String getPosition() {

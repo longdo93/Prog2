@@ -1,35 +1,48 @@
 package GUI;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
-import javax.swing.JButton;
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JPanel;
-
-import actors.GameMaster;
 
 public class MainFrame extends JFrame {
 	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-
 	public MainFrame() {
-		setTitle("Maze Game");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
-		setSize(800, 600);				//sizing app frame
+		
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-		setLocation((d.width - getSize().width) / 2, (d.height - getSize().height) / 2);		//centering app frame
-
+		MapPanel map= new MapPanel();
+		ControllerPanel controller = new ControllerPanel();
+		
+		this.setTitle("Maze Game");
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(800, 600);				//sizing app frame
+		this.setLocation((d.width - getSize().width) / 2, (d.height - getSize().height) / 2);		//centering app frame
+		this.setBackground(Color.BLACK);
+		this.getContentPane().setLayout(new BorderLayout());
+	
 		createMenuBar();
-		JPanel bp = createButtons();
-		getContentPane().add(bp);
+		controller.createButtons();
+		getContentPane().add(map.getMapPanel());
+		getContentPane().add(controller.getControllerPanel(),BorderLayout.PAGE_END);
+		
+		/*
+		//test		
+		JInternalFrame inFrame1 = new JInternalFrame("Dokument 1", true, true, true, true);
+		inFrame1.setSize(200,200);
+		inFrame1.setLocation(0, 0);
+		inFrame1.show();
+		
+		getContentPane().add(inFrame1);
+		*/
+
 		
 	}
 
@@ -51,35 +64,5 @@ public class MainFrame extends JFrame {
 		menuBar.add(menuFile4);
 		setJMenuBar(menuBar);
 	}
-
-	private JPanel createButtons() {
-		
-		JPanel buttonPanel = new JPanel();
-		
-		JButton north = new JButton("North");
-		north.setActionCommand("N");
-		north.addActionListener(GameMaster.getInstance());
-		JButton west = new JButton("West");
-		west.setActionCommand("W");
-		west.addActionListener(GameMaster.getInstance());
-		JButton east = new JButton("East");
-		east.setActionCommand("E");
-		east.addActionListener(GameMaster.getInstance());
-		JButton south = new JButton("South");
-		south.setActionCommand("S");
-		south.addActionListener(GameMaster.getInstance());
-
-		buttonPanel.setLayout(null);
-		buttonPanel.add(north);
-		buttonPanel.add(west);
-		buttonPanel.add(east);
-		buttonPanel.add(south);
-		north.setBounds(85, 435, 60, 30);
-		west.setBounds(35, 465, 60, 30);
-		east.setBounds(135, 465, 60, 30);
-		south.setBounds(85, 495, 60, 30);
-		
-		return buttonPanel;
-	}
-
+	
 }
