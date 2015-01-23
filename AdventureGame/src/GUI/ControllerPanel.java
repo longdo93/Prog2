@@ -1,6 +1,11 @@
 package GUI;
 
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Label;
+import java.awt.TextField;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -10,7 +15,9 @@ import actors.GameMaster;
 
 public class ControllerPanel {
 	
-	JPanel buttonPanel = new JPanel();
+	private JPanel buttonPanel = new JPanel();
+	private Label label=new Label("Geben Sie eine Richtung mit den Pfeiltasten oder n,s,w,e an:");
+	private TextField textfield=new TextField();
 	
 	
 	public void createButtons() {
@@ -19,6 +26,7 @@ public class ControllerPanel {
 		JButton west = new JButton("West");
 		JButton east = new JButton("East");
 		JButton south = new JButton("South");
+		
 	
 		north.setActionCommand("N");
 		north.addActionListener(GameMaster.getInstance());
@@ -38,15 +46,26 @@ public class ControllerPanel {
 		this.buttonPanel.add(west);
 		this.buttonPanel.add(east);
 		this.buttonPanel.add(south);
+		this.buttonPanel.add(label);
+		label.setBounds(450, 20, 345, 30);
+		label.setFont(new Font("Arial",Font.BOLD, 12));
 		north.setBounds(85, 10, 60, 30);
 		west.setBounds(35, 40, 60, 30);
 		east.setBounds(135, 40, 60, 30);
 		south.setBounds(85, 70, 60, 30);
-
+		
+		this.buttonPanel.add(textfield);
+		textfield.setBounds(450, 50, 345, 30);
+        textfield.addKeyListener(GameMaster.getInstance());
 	}
 	
 	public JComponent getControllerPanel() {
 		return buttonPanel;
 	}
+
+	public TextField getTextField(){
+		return textfield;
+	}
+
 
 }
