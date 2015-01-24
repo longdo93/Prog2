@@ -16,7 +16,7 @@ import actors.GameMaster;
 public class ControllerPanel {
 	
 	private JPanel buttonPanel = new JPanel();
-	private Label label=new Label("Geben Sie eine Richtung mit den Pfeiltasten oder n,s,w,e an:");
+	private Label label=new Label("Geben Sie eine Richtung mit den Pfeiltasten an:");
 	private TextField textfield=new TextField();
 	
 	

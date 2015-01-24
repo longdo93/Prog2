@@ -187,7 +187,7 @@ public class GameMaster implements ActionListener, KeyListener{
 			System.out.println("South");
 			movePlayer("S");}
 		else{
-			System.out.println("Bitte gib n,s,w,e ein");
+			System.out.println("Bitte benutze die Pfeiltasten");
 			
 		}
 		
