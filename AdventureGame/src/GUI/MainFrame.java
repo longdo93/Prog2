@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
-import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -15,10 +14,15 @@ public class MainFrame extends JFrame {
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * 
+	 */
 	public MainFrame() {
 		
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-		MapPanel map= new MapPanel();
+		MapPanel map = MapPanel.getInstance();
 		ControllerPanel controller = new ControllerPanel();
 		
 		this.setTitle("Maze Game");
@@ -33,16 +37,6 @@ public class MainFrame extends JFrame {
 		controller.createButtons();
 		getContentPane().add(map.getMapPanel());
 		getContentPane().add(controller.getControllerPanel(),BorderLayout.PAGE_END);
-		
-		/*
-		//test		
-		JInternalFrame inFrame1 = new JInternalFrame("Dokument 1", true, true, true, true);
-		inFrame1.setSize(200,200);
-		inFrame1.setLocation(0, 0);
-		inFrame1.show();
-		
-		getContentPane().add(inFrame1);
-		*/
 
 		
 	}

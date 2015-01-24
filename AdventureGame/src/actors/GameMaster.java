@@ -20,6 +20,7 @@ public class GameMaster implements ActionListener, KeyListener{
 
 	private static GameMaster instance;
 
+
 	private GameMaster() {
 	}
 
@@ -186,7 +187,7 @@ public class GameMaster implements ActionListener, KeyListener{
 			System.out.println("South");
 			movePlayer("S");}
 		else{
-			System.out.println("Bitte gebe n,s,w,e ein");
+			System.out.println("Bitte gib n,s,w,e ein");
 			
 		}
 		
@@ -200,6 +201,10 @@ public class GameMaster implements ActionListener, KeyListener{
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+	}
+
+	public Vector<Room> getLabyrinth() {
+		return labyrinth;
 	}
 
 }
