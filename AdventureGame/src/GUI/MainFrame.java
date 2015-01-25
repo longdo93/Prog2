@@ -21,7 +21,6 @@ public class MainFrame extends JFrame {
 	 */
 	
 	private static MainFrame instance;
-	private int x,y;
 	
 	public static MainFrame getInstance() {
 		if (instance == null) {
@@ -37,8 +36,8 @@ public class MainFrame extends JFrame {
 		
 		this.setTitle("Maze Game");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(765, 595);	//sizing app frame
 		this.setResizable(false);
+		this.setSize(765, 595);				//sizing app frame
 		this.setLocation((d.width - getSize().width) / 2, (d.height - getSize().height) / 2);		//centering app frame
 		this.setBackground(Color.BLACK);
 		this.getContentPane().setLayout(new BorderLayout());
@@ -49,12 +48,13 @@ public class MainFrame extends JFrame {
 
 		
 	}
-	
+	/**
+	 * this method adds MapPanel to MainFrame after game has been loaded
+	 */
 	public void addMapPanel() {
 		this.getContentPane().add(MapPanel.getInstance().getMapPanel());
 		this.validate();
 	}
-	
 
 	private void createMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
@@ -64,8 +64,6 @@ public class MainFrame extends JFrame {
 		JMenu menuFile4 = new JMenu("Author");
 		
 		menuFile.add(MenuItemFactory.createMenuItem("Open Raumaufbau.txt...", 'o', "open_map"));
-		menuFile.add(MenuItemFactory.createMenuItem("Save...", 's', "file_save"));
-		menuFile.add(MenuItemFactory.createMenuItem("Quit...", 'q', "file_close"));
 		menuFile2.add(MenuItemFactory.createMenuItem("Open...", 'o', "figure_open"));
 		menuFile3.add(MenuItemFactory.createMenuItem("Describtion...", 'd', "descr"));
 		menuFile4.add(MenuItemFactory.createMenuItem("Show...", 'o', "show"));

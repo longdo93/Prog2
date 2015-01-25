@@ -4,6 +4,9 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Label;
 import java.awt.TextField;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -37,16 +40,15 @@ public class ControllerPanel {
 		south.setActionCommand("S");
 		south.addActionListener(GameMaster.getInstance());
 
-		
-		this.buttonPanel.setPreferredSize(new Dimension(800,100));
+		this.buttonPanel.setPreferredSize(new Dimension(700,100));
 		this.buttonPanel.setLayout(null);
 		this.buttonPanel.add(north);
 		this.buttonPanel.add(west);
 		this.buttonPanel.add(east);
 		this.buttonPanel.add(south);
 		this.buttonPanel.add(label);
+		label.setBounds(450, 20, 345, 30);
 		label.setFont(new Font("Arial",Font.BOLD, 12));
-		label.setBounds(400, 20, 345, 30);
 		north.setBounds(85, 10, 60, 30);
 		west.setBounds(35, 40, 60, 30);
 		east.setBounds(135, 40, 60, 30);
