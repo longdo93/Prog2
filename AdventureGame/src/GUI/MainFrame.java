@@ -19,39 +19,57 @@ public class MainFrame extends JFrame {
 	/**
 	 * 
 	 */
-	public MainFrame() {
+	
+	private static MainFrame instance;
+	private int x,y;
+	
+	public static MainFrame getInstance() {
+		if (instance == null) {
+			instance = new MainFrame();
+		}
+		return instance;
+	}
+	
+	private MainFrame() {
 		
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-		MapPanel map = MapPanel.getInstance();
 		ControllerPanel controller = new ControllerPanel();
 		
 		this.setTitle("Maze Game");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(765, 595);	//sizing app frame
 		this.setResizable(false);
-		this.setSize(10*85, 8*85);				//sizing app frame
 		this.setLocation((d.width - getSize().width) / 2, (d.height - getSize().height) / 2);		//centering app frame
 		this.setBackground(Color.BLACK);
 		this.getContentPane().setLayout(new BorderLayout());
 	
 		createMenuBar();
 		controller.createButtons();
-		getContentPane().add(map.getMapPanel());
 		getContentPane().add(controller.getControllerPanel(),BorderLayout.PAGE_END);
 
 		
 	}
+	
+	public void addMapPanel() {
+		this.getContentPane().add(MapPanel.getInstance().getMapPanel());
+		this.validate();
+	}
+	
 
 	private void createMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
 		JMenu menuFile = new JMenu("File");
-
+		JMenu menuFile2 = new JMenu("Figure");
 		JMenu menuFile3 = new JMenu("Help");
 		JMenu menuFile4 = new JMenu("Author");
 		
 		menuFile.add(MenuItemFactory.createMenuItem("Open Raumaufbau.txt...", 'o', "open_map"));
-		menuFile.add(MenuItemFactory.createMenuItem("Open Spielfigur (gif oder jpg-Datei)...", 'o', "figure_open"));
+		menuFile.add(MenuItemFactory.createMenuItem("Save...", 's', "file_save"));
+		menuFile.add(MenuItemFactory.createMenuItem("Quit...", 'q', "file_close"));
+		menuFile2.add(MenuItemFactory.createMenuItem("Open...", 'o', "figure_open"));
 		
 		menuBar.add(menuFile);
+		menuBar.add(menuFile2);
 		menuBar.add(menuFile3);
 		menuBar.add(menuFile4);
 		setJMenuBar(menuBar);

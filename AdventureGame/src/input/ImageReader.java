@@ -1,7 +1,6 @@
 package input;
 
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
 public class ImageReader {
 	
@@ -47,9 +46,5 @@ public class ImageReader {
 		ImageIcon image = new ImageIcon(getImgURL(url), "test");
 		return image;
 	}
-	
-	public void setImage(JLabel label,String s) {
-		label.setIcon(ImageReader.getInstance().getImage(s));
-		}
 
 }

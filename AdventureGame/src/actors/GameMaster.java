@@ -1,5 +1,6 @@
 package actors;
 
+import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -7,10 +8,14 @@ import java.awt.event.KeyListener;
 import java.util.Random;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
+
+import GUI.ControllerPanel;
 import GUI.MapPanel;
 import dungeon.AbstractRoom;
 import dungeon.Client;
 import dungeon.MagicRoomEvent;
+import dungeon.Room;
 
 /**
  * This Class is the GameMaster.
@@ -44,12 +49,10 @@ public class GameMaster implements ActionListener, KeyListener{
 		}
 		if (this.player == null) {
 			this.player = Player.getInstance();
-			Random random = new Random();
-			int r = random.nextInt(this.labyrinth.size());
-			
+			int r = 1+ (int) Math.random()*this.labyrinth.size();
 			String s = String.valueOf(r);
-			this.player.setPosition(s);			
-			System.out.println(this.player.getPosition());
+			this.player.setPosition(s);	
+			JOptionPane.showMessageDialog(null,"Player spawned in room: " + player.getPosition(), null, JOptionPane.INFORMATION_MESSAGE);
 			this.player.addObserver(MapPanel.getInstance());
 		}
 	}
@@ -125,7 +128,7 @@ public class GameMaster implements ActionListener, KeyListener{
 			}
 			this.player.setPosition(enterRoom);
 		} else
-			System.out.println("You can not move in this direction!");
+			JOptionPane.showMessageDialog(null, "You can not move in this direction!", null, JOptionPane.ERROR_MESSAGE);
 	}
 
 	/**
@@ -158,6 +161,41 @@ public class GameMaster implements ActionListener, KeyListener{
 		}
 		return room;
 	}
+	
+	public AbstractRoom getMagicRoom(){
+		AbstractRoom magicroom=null;
+		for (int i = 0; i < this.labyrinth.size(); i++) {
+			if((this.labyrinth.elementAt(i).getIsMagicRoom())){
+				magicroom=this.labyrinth.elementAt(i);
+			}
+			
+		}
+		return magicroom;
+	}
+	
+	public int countNorth() {
+		int north = 0;
+		
+		for (int i = 0; i < labyrinth.size(); i++) {
+			if (!labyrinth.elementAt(i).getN().equals("0")) {
+				north++;
+			}
+		}
+		
+		return north;
+	}
+	
+	public int countEast() {
+		int east = 0;
+		
+		for (int i = 0; i < labyrinth.size(); i++) {
+			if (!labyrinth.elementAt(i).getE().equals("0")) {
+				east++;
+			}
+		}
+		
+		return east;
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -165,23 +203,32 @@ public class GameMaster implements ActionListener, KeyListener{
 			if (e.getActionCommand().equals("N")) {
 				System.out.println("North");
 				movePlayer("N");
+				if ( getRoom(player.getPosition()).getIsMagicRoom()) {
+					MagicRoomEvent.getInstance().quiz();
+				}
 			} else if (e.getActionCommand().equals("W")) {
 				System.out.println("West");
 				movePlayer("W");
+				if ( getRoom(player.getPosition()).getIsMagicRoom()) {
+					MagicRoomEvent.getInstance().quiz();
+				}
 			} else if (e.getActionCommand().equals("S")) {
 				System.out.println("South");
 				movePlayer("S");
+				if ( getRoom(player.getPosition()).getIsMagicRoom()) {
+					MagicRoomEvent.getInstance().quiz();
+				}
 			} else if (e.getActionCommand().equals("E")) {
 				System.out.println("East");
 				movePlayer("E");
+				if ( getRoom(player.getPosition()).getIsMagicRoom()) {
+					MagicRoomEvent.getInstance().quiz();
+				}
 			}
 			
 			System.out.println(getPlayerRoom().toString()); 							// delete this later
 		}else
 			System.out.println("Not able to move yet!");
-		if ( getRoom(player.getPosition()).getIsMagicRoom()) {
-			MagicRoomEvent.getInstance().quiz();
-		}
 	}
 
 	@Override
@@ -194,26 +241,30 @@ public class GameMaster implements ActionListener, KeyListener{
 	public void keyPressed(KeyEvent e) {
 		int key=e.getKeyCode();
 		if (Client.getInstance().checkLabyrinth() == true && player.getIsAbleToMove()) {
-		if(key==KeyEvent.VK_UP){
+		if(key==e.VK_UP){
 			System.out.println("North");
 			movePlayer("N");
-		}else if(key==KeyEvent.VK_LEFT){
+		}else if(key==e.VK_LEFT){
 			System.out.println("West");
 			movePlayer("W");}
-		else if(key==KeyEvent.VK_RIGHT){
+		else if(key==e.VK_RIGHT){
 			System.out.println("East");
 			movePlayer("E");
 			}
-		else if(key==KeyEvent.VK_DOWN){
+		else if(key==e.VK_DOWN){
 			System.out.println("South");
 			movePlayer("S");}
 		else{
-			System.out.println("Bitte gib n,s,w,e ein");
+			JOptionPane.showMessageDialog(null, "Bitte benutze die Pfeiltasten", null, JOptionPane.ERROR_MESSAGE);
 			
 		}
 		
-		System.out.println(getPlayerRoom().toString()); 	
+		System.out.println(getPlayerRoom().toString()); 
+		if ( getRoom(player.getPosition()).getIsMagicRoom()) {
+			MagicRoomEvent.getInstance().quiz();
+		}
 		}else
+			
 			System.out.println("Not able to move yet!");
 		
 
@@ -221,10 +272,6 @@ public class GameMaster implements ActionListener, KeyListener{
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-	}
-
-	public Vector getLabyrinth() {
-		return this.labyrinth;
 	}
 
 }

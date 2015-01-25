@@ -5,30 +5,29 @@ import input.ImageReader;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import dungeon.Room;
 import actors.GameMaster;
+import actors.Player;
+import dungeon.Room;
 
-public class MapPanel implements Observer{
+public class MapPanel implements Observer {
 	
 	private static MapPanel instance;
 	
-	static final int X = 10;
-	static final int Y =10;
-	boolean east;
-	boolean west;
-	boolean north;
-	boolean south;
-	JLabel map[][]=new JLabel[Y][X];
+	static int X;
+	static int Y;
 	
+	Vector<Room> roomCache = null;
+	
+	ArrayList<JLabel> labels = new ArrayList<JLabel>();
 	
 	public static MapPanel getInstance() {
 		if (instance == null) {
@@ -37,12 +36,14 @@ public class MapPanel implements Observer{
 		return instance;
 	}
 	
-	JPanel mapPanel = new JPanel(new GridLayout(Y, X));
+	JPanel mapPanel;
 	
 	private MapPanel() {
+		this.mapPanel  = new JPanel(new GridLayout(GameMaster.getInstance().countNorth(), GameMaster.getInstance().countEast()));
 		mapPanel.setBackground(Color.BLACK);
 		mapPanel.setBorder(BorderFactory.createLineBorder(Color.red));
-		mapPanel.setPreferredSize(new Dimension(X*85, Y*85));
+		mapPanel.setPreferredSize(new Dimension(765, 595));
+		
 		createJLabels();
 		
 	}
@@ -53,107 +54,46 @@ public class MapPanel implements Observer{
 	}
 	
 	private void createJLabels() {
-		
-
-		
-		for (int i = 0; i < this.Y; i++) {
-			for (int j = 0; j < this.X; j++) {
-				JLabel label = new JLabel();
-				//label.setBorder(BorderFactory.createLineBorder(Color.white));
-				map[i][j]=label;
-				mapPanel.add(label);
-			}
+		for (int i = 0; i < (9*7); i++) {
+			JLabel label = new JLabel();
+			label.setBorder(BorderFactory.createLineBorder(Color.white));
+			this.labels.add(label);
+			this.mapPanel.add(label);
 			
 		}
-			
 	}
 	
 	public void drawMap() {
-	
+		/*
 		Vector<Room> roomCache = null;
 		if (GameMaster.getInstance().getLabyrinth() != null) {
 		 roomCache= GameMaster.getInstance().getLabyrinth();
 		}
-		
-		int y=3;
-		int x=2;
-		ImageIcon room=ImageReader.getInstance().getImage("room");
-		ImageIcon magicroom=ImageReader.getInstance().getImage("magicRoom");
-		map[y][x].setIcon(room);
-		
-		for (int i = 0; i < roomCache.size(); i++) {
-			
-			if (!roomCache.elementAt(i).getN().equals("0")) {
-				if(y>0){
-				map[y-1][x].setIcon(room);
-				north=true;
-				}if(y==0){
-					map[y][x].setIcon(room);
-				}
+		labels.get(0).setIcon(ImageReader.getInstance().getImage());
+		for (int room = 0; room < roomCache.size(); room++) {
+			if (!roomCache.elementAt(room).getN().equals("0")) {
+				//labels.get(room - 9).setIcon(ImageReader.getInstance().getImage());
 			}
-			else{
-				north=false;
-				}
-			
-			if (!roomCache.elementAt(i).getE().equals("0")) {
-				map[y][x+1].setIcon(room);
-				this.east=true;
+			if (!roomCache.elementAt(room).getE().equals("0")) {
+				labels.get(room + 1).setIcon(ImageReader.getInstance().getImage());
 			}
-			else{
-				this.east=false;
+			if (!roomCache.elementAt(room).getS().equals("0")) {
+				//labels.get(room +9).setIcon(ImageReader.getInstance().getImage());
 			}
-			
-			if (!roomCache.elementAt(i).getS().equals("0")) {
-				map[y+1][x].setIcon(room);
-				System.out.println("paintsouth");
-				south=true;
+			if (!roomCache.elementAt(room).getW().equals("0")) {
+				labels.get(room - 1).setIcon(ImageReader.getInstance().getImage());
 			}
-			else{
-				south=false;
-			}
-
-			if (!roomCache.elementAt(i).getW().equals("0")) {
-				 if(east==false){
-				map[y][x-1].setIcon(room);
-				west=true;
-				 }else if(east==true){
-					 west=true;
-						map[y][x+1].setIcon(room);
-				 }
-			}
-			else{
-				  west=false;
-				 }
-
-			if(north==true && south==false){
-				y--;
-			}
-			if ( east==true&&south==false&&north==false){
-				x++;			
-			}else
-			if(east==true){
-				x++;
-			}
-//			if ( east==true&&west==false&&south==false&&north==false){
-//				x--;
-//			}
-			if(south==true){
-				y++;
-			}else
-			if(south==true&&north==false){
-				y++;
-			}
-
 		}
-
+		*/
 	}
+	
 
 	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
+	public void update(Observable player, Object position) {
+		//pseudocode:
+		//find Room with ID == player.position and setIcon(ImageReader.getInstance().getImage());
+		System.out.println("Player now in room: " + Player.getInstance().getPosition());
 	}
 	
 
 }
-

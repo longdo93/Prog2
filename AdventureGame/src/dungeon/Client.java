@@ -25,7 +25,7 @@ public class Client {
 	private AbstractFactory factoryB = null;
 	private GameMaster gm = null;
 	
-	Vector<AbstractRoom> labyrinth = new Vector<AbstractRoom>();				//list for generated rooms
+	Vector<AbstractRoom> labyrinth = new Vector();				//list for generated rooms
 	
 	public void setFactory(AbstractFactory factory, AbstractFactory factoryB) {
 		if (this.factory == null && this.factoryB == null) {
