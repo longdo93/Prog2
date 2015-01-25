@@ -28,7 +28,7 @@ public class MainFrame extends JFrame {
 		this.setTitle("Maze Game");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
-		this.setSize(800, 600);				//sizing app frame
+		this.setSize(10*85, 8*85);				//sizing app frame
 		this.setLocation((d.width - getSize().width) / 2, (d.height - getSize().height) / 2);		//centering app frame
 		this.setBackground(Color.BLACK);
 		this.getContentPane().setLayout(new BorderLayout());
@@ -44,17 +44,14 @@ public class MainFrame extends JFrame {
 	private void createMenuBar() {
 		JMenuBar menuBar = new JMenuBar();
 		JMenu menuFile = new JMenu("File");
-		JMenu menuFile2 = new JMenu("Figure");
+
 		JMenu menuFile3 = new JMenu("Help");
 		JMenu menuFile4 = new JMenu("Author");
 		
 		menuFile.add(MenuItemFactory.createMenuItem("Open Raumaufbau.txt...", 'o', "open_map"));
-		menuFile.add(MenuItemFactory.createMenuItem("Save...", 's', "file_save"));
-		menuFile.add(MenuItemFactory.createMenuItem("Quit...", 'q', "file_close"));
-		menuFile2.add(MenuItemFactory.createMenuItem("Open...", 'o', "figure_open"));
+		menuFile.add(MenuItemFactory.createMenuItem("Open Spielfigur (gif oder jpg-Datei)...", 'o', "figure_open"));
 		
 		menuBar.add(menuFile);
-		menuBar.add(menuFile2);
 		menuBar.add(menuFile3);
 		menuBar.add(menuFile4);
 		setJMenuBar(menuBar);

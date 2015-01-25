@@ -1,6 +1,5 @@
 package actors;
 
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -8,18 +7,19 @@ import java.awt.event.KeyListener;
 import java.util.Random;
 import java.util.Vector;
 
-import GUI.ControllerPanel;
+import GUI.MapPanel;
+import dungeon.AbstractRoom;
 import dungeon.Client;
-import dungeon.Room;
+import dungeon.MagicRoomEvent;
 
-/*
+/**
  * This Class is the GameMaster.
  * The GameMaster observes the game and moves the Player, manages game rules etc.
  */
+
 public class GameMaster implements ActionListener, KeyListener{
 
 	private static GameMaster instance;
-
 
 	private GameMaster() {
 	}
@@ -33,12 +33,12 @@ public class GameMaster implements ActionListener, KeyListener{
 	}
 
 	private Player player;
-	private Vector<Room> labyrinth;
+	private Vector<AbstractRoom> labyrinth;
 
-	/*
-	 * Initiate the game. Set player position to a random room.
+	/**
+	 * Initiates the game. Sets player position to a random room.
 	 */
-	public void setGame(Vector<Room> labyrinth) {
+	public void setGame(Vector<AbstractRoom> labyrinth) {
 		if (this.labyrinth == null) {
 			this.labyrinth = labyrinth;
 		}
@@ -46,27 +46,32 @@ public class GameMaster implements ActionListener, KeyListener{
 			this.player = Player.getInstance();
 			Random random = new Random();
 			int r = random.nextInt(this.labyrinth.size());
-			String s = String.valueOf(r);
-			this.player.setPosition(s);
 			
-			System.out.println("Player created"); // delete this later
+			String s = String.valueOf(r);
+			this.player.setPosition(s);			
+			System.out.println(this.player.getPosition());
+			this.player.addObserver(MapPanel.getInstance());
 		}
 	}
 	
-	public Room getRoom(int i) {
-		Room room = this.labyrinth.elementAt(i);
-		
+	/**
+	 * 
+	 * @param i
+	 * @return a specific room in the list at i
+	 */
+	public AbstractRoom getRoom(int i) {
+		AbstractRoom room = this.labyrinth.elementAt(i);
 		return room;
 	}
 
-	/*
+	/**
 	 * Takes parameter direction and player position. Checks if the room has a
 	 * door at this direction. If yes, return true, if not, return false.
 	 */
 	public boolean checkMove(String target, String playerPos) {
 		target = this.player.getDirection();
 		playerPos = this.player.getPosition();
-		Room room = getPlayerRoom();
+		AbstractRoom room = getPlayerRoom();
 
 		switch (target) {
 		case "N":
@@ -95,15 +100,14 @@ public class GameMaster implements ActionListener, KeyListener{
 
 	}
 
-	/*
-	 * Checks if player can move to given direction. If true setPosition to room
+	/**
+	 * Checks if player is able to move to given direction. If true setPosition to room
 	 * lying in this direction.
 	 */
 	public void movePlayer(String direction) {
 		this.player.setDirection(direction);
 		String enterRoom = "";
-		Room room = getPlayerRoom();
-		System.out.println("checking move..."); // delete this later
+		AbstractRoom room = getPlayerRoom();
 		if (checkMove(direction, this.player.getPosition())) {
 			switch (direction) {
 			case "N":
@@ -124,22 +128,40 @@ public class GameMaster implements ActionListener, KeyListener{
 			System.out.println("You can not move in this direction!");
 	}
 
-	private Room getPlayerRoom() {
-		Room room = null;
+	/**
+	 * 
+	 * @return room where the player is currently staying.
+	 */
+	private AbstractRoom getPlayerRoom() {
+		AbstractRoom room = null;
 		for (int i = 0; i < this.labyrinth.size(); i++) {
-			if (this.labyrinth.elementAt(i).getId()
+			if ((this.labyrinth.elementAt(i)).getId()
 					.equals(this.player.getPosition())) {
 				room = this.labyrinth.elementAt(i);
 				break;
 			}
 		}
-
+		return room;
+	}
+	
+	/**
+	 * 
+	 * @param ID
+	 * @return room with the specific ID
+	 */
+	private AbstractRoom getRoom(String ID) {
+		AbstractRoom room = null;
+		for (int i = 0; i < this.labyrinth.size(); i++) {
+			if ((this.labyrinth.elementAt(i)).getId().equals(ID)) {
+				room = this.labyrinth.elementAt(i);
+			}
+		}
 		return room;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (Client.getInstance().checkLabyrinth() == true) {
+		if (Client.getInstance().checkLabyrinth() == true && player.getIsAbleToMove()) {
 			if (e.getActionCommand().equals("N")) {
 				System.out.println("North");
 				movePlayer("N");
@@ -154,13 +176,12 @@ public class GameMaster implements ActionListener, KeyListener{
 				movePlayer("E");
 			}
 			
-					
-			System.out.println("You are now in room: " + this.player.getPosition()); // delete this later
 			System.out.println(getPlayerRoom().toString()); 							// delete this later
-
 		}else
-			System.out.println("Please open map first!");
-
+			System.out.println("Not able to move yet!");
+		if ( getRoom(player.getPosition()).getIsMagicRoom()) {
+			MagicRoomEvent.getInstance().quiz();
+		}
 	}
 
 	@Override
@@ -172,29 +193,28 @@ public class GameMaster implements ActionListener, KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int key=e.getKeyCode();
-		if (Client.getInstance().checkLabyrinth() == true) {
-		if(key==e.VK_UP){
+		if (Client.getInstance().checkLabyrinth() == true && player.getIsAbleToMove()) {
+		if(key==KeyEvent.VK_UP){
 			System.out.println("North");
 			movePlayer("N");
-		}else if(key==e.VK_LEFT){
+		}else if(key==KeyEvent.VK_LEFT){
 			System.out.println("West");
 			movePlayer("W");}
-		else if(key==e.VK_RIGHT){
+		else if(key==KeyEvent.VK_RIGHT){
 			System.out.println("East");
 			movePlayer("E");
 			}
-		else if(key==e.VK_DOWN){
+		else if(key==KeyEvent.VK_DOWN){
 			System.out.println("South");
 			movePlayer("S");}
 		else{
-			System.out.println("Bitte benutze die Pfeiltasten");
+			System.out.println("Bitte gib n,s,w,e ein");
 			
 		}
 		
-		System.out.println("You are now in room: " + this.player.getPosition()); // delete this later
 		System.out.println(getPlayerRoom().toString()); 	
 		}else
-			System.out.println("Please open map first!");
+			System.out.println("Not able to move yet!");
 		
 
 		}
@@ -203,8 +223,8 @@ public class GameMaster implements ActionListener, KeyListener{
 	public void keyReleased(KeyEvent e) {
 	}
 
-	public Vector<Room> getLabyrinth() {
-		return labyrinth;
+	public Vector getLabyrinth() {
+		return this.labyrinth;
 	}
 
 }

@@ -22,16 +22,19 @@ public class Client {
 	}
 	
 	private AbstractFactory factory = null;
+	private AbstractFactory factoryB = null;
 	private GameMaster gm = null;
 	
-	Vector<Room> labyrinth = new Vector<Room>();				//list for generated rooms
+	Vector<AbstractRoom> labyrinth = new Vector<AbstractRoom>();				//list for generated rooms
 	
-	public void setFactory(AbstractFactory factory) {
-		System.out.println("setFactory()");						//delete this later
-		if (this.factory == null) {
+	public void setFactory(AbstractFactory factory, AbstractFactory factoryB) {
+		if (this.factory == null && this.factoryB == null) {
 			this.factory = factory;
+			this.factoryB = factoryB;
 		}
 	}
+	
+	
 	
 	public void setGameMaster() {
 		if (this.gm == null) {
@@ -41,7 +44,6 @@ public class Client {
 	
 	public void makeRoom() {
 		if ((this.factory != null) && (this.makeRoomDone == false)) {
-			System.out.println("makeRoom()");					//delete this later
 			this.factory.setRoomPlan();
 			for (int i = 0; i < this.factory.getRoomCount(); i++) {
 				this.labyrinth.add((Room) this.factory.makeRoom(i));
@@ -51,8 +53,9 @@ public class Client {
 		
 			Random random = new Random();
 			int r = random.nextInt(this.labyrinth.size());
-			this.labyrinth.elementAt(r).setMagicRoom(true);
-			System.out.println("MagicRoom with ID " + this.labyrinth.elementAt(r).getId() + " created"); //delete this later
+			this.factoryB.setRoomPlan();
+			this.labyrinth.set(r, (MagicRoom) this.factoryB.makeRoom(r));
+			System.out.println("MagicRoom is room: " + this.labyrinth.elementAt(r).getId());
 	}
 	
 	public void startGame() {

@@ -1,5 +1,9 @@
 package dungeon;
 
+/*
+ * This class is the blueprint for the rooms
+ */
+
 public abstract class AbstractRoom {
 	
 	private String id, n, e, s, w;
@@ -45,11 +49,11 @@ public abstract class AbstractRoom {
 		this.w = w;
 	}
 
-	public boolean isMagicRoom() {
+	public boolean getIsMagicRoom() {
 		return isMagicRoom;
 	}
 
-	public void setMagicRoom(boolean isMagicRoom) {
+	public void setIsMagicRoom(boolean isMagicRoom) {
 		this.isMagicRoom = isMagicRoom;
 	}
 
