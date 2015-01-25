@@ -1,21 +1,17 @@
 package actors;
 
-import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Random;
 import java.util.Vector;
 
 import javax.swing.JOptionPane;
 
-import GUI.ControllerPanel;
 import GUI.MapPanel;
 import dungeon.AbstractRoom;
 import dungeon.Client;
 import dungeon.MagicRoomEvent;
-import dungeon.Room;
 
 /**
  * This Class is the GameMaster.
